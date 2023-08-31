@@ -1,28 +1,24 @@
 package main
 
 import (
-    "os"
+	"os"
 )
 
 const (
-    PORT = 8080
+	PORT = 8080
 )
 
 var redisHost = "localhost"
-var greetingLabel = "#greetingLabel#"
 
 func main() {
-    if os.Getenv("redisHost") != "" {
-        redisHost = os.Getenv("redisHost")
-    }
-    if os.Getenv("greetingLabel") != "" {
-        greetingLabel = os.Getenv("greetingLabel")
-    }
+	if os.Getenv("redisHost") != "" {
+		redisHost = os.Getenv("redisHost")
+	}
 
-    redisClient := NewRedisClient(redisHost)
-    defer redisClient.Close()
+	redisClient := NewRedisClient(redisHost)
+	defer redisClient.Close()
 
-    httpHandler := NewHttpHandler(redisClient, greetingLabel)
-    httpServer := NewHttpServer(httpHandler)
-    httpServer.Listen(PORT)
+	httpHandler := NewHttpHandler(redisClient)
+	httpServer := NewHttpServer(httpHandler)
+	httpServer.Listen(PORT)
 }

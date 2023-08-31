@@ -8,8 +8,6 @@ const BACKEND_HOSTS = [
     process.env.BACKEND_HOST2 || 'backend-golang'
 ]
 
-const GREETING_LABEL = process.env.greetingLabel || '#greetingLabel#'
-
 const app = express()
 
 app.get('*', async (req, res) => {
@@ -17,7 +15,7 @@ app.get('*', async (req, res) => {
     const name = req.url.substr(1)
     try {
         const results = await proxyToBackends(BACKEND_HOSTS, name)
-        const joined = results.reduce((acc, result) => `${acc}\n${result}`, `[NODEJS] ${GREETING_LABEL} ${name}`)
+        const joined = results.reduce((acc, result) => `${acc}\n${result}`, `[NODEJS] Hello ${name}`)
         res.send(joined)
     } catch (e) {
         console.error(e)

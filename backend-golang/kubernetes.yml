@@ -3,7 +3,7 @@ apiVersion: apps/v1
 metadata:
   name: backend-golang
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: backend-golang-pod
@@ -13,10 +13,13 @@ spec:
         app: backend-golang-pod
     spec:
       containers:
+        - name: sidecar-envoy-container
+          image: mouton4711/kubernetes:sidecar-envoy
+          ports:
+            - containerPort: 8888
+              name: sidecar-port
         - name: backend-golang-container
           image: mouton4711/kubernetes:backend-golang
-          ports:
-            - containerPort: 8080
           envFrom:
             - configMapRef:
                 name: translation-config
@@ -26,8 +29,9 @@ apiVersion: v1
 metadata:
   name: backend-golang
 spec:
+  type: ClusterIP
   selector:
     app: backend-golang-pod
   ports:
     - port: 80
-      targetPort: 8080
+      targetPort: sidecar-port

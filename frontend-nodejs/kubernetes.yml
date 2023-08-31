@@ -13,10 +13,13 @@ spec:
         app: frontend-nodejs-pod
     spec:
       containers:
+        - name: sidecar-nodejs-container
+          image: mouton4711/kubernetes:sidecar-envoy
+          ports:
+            - containerPort: 8888
+              name: sidecar-port
         - name: frontend-nodejs-container
           image: mouton4711/kubernetes:frontend-nodejs
-          ports:
-            - containerPort: 8080
           envFrom:
             - configMapRef:
                 name: translation-config
@@ -31,10 +34,11 @@ apiVersion: v1
 metadata:
   name: frontend-nodejs
 spec:
-  ports:
-    - name: service-port
-      port: 80
-      targetPort: 8080
+  type: LoadBalancer
   selector:
     app: frontend-nodejs-pod
-  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: sidecar-port
+
+

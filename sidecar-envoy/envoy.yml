@@ -1,0 +1,45 @@
+static_resources:
+
+  listeners:
+  - name: ingress_listener
+    address:
+      socket_address:
+        address: 0.0.0.0
+        port_value: 8888
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress_http
+          access_log:
+          - name: envoy.access_loggers.stdout
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+          http_filters:
+          - name: envoy.filters.http.router
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+          route_config:
+            name: service_route_config
+            virtual_hosts:
+            - name: service_virtual_host
+              domains: ["*"]
+              routes:
+              - match:
+                  prefix: "/"
+                route:
+                  cluster: service_cluster
+
+  clusters:
+  - name: service_cluster
+    type: STATIC
+    load_assignment:
+      cluster_name: service_cluster
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 0.0.0.0
+                port_value: 8080
