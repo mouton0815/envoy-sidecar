@@ -3,10 +3,7 @@ const axios = require('axios').default
 
 const PORT = 8080
 
-const BACKEND_HOSTS = [
-    process.env.BACKEND_HOST1 || 'backend-spring',
-    process.env.BACKEND_HOST2 || 'backend-golang'
-]
+const BACKEND_HOSTS = ['backend-spring', 'backend-golang']
 
 const app = express()
 

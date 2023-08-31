@@ -14,20 +14,13 @@ spec:
     spec:
       containers:
         - name: sidecar-nodejs-container
-          image: mouton4711/kubernetes:sidecar-envoy
+          image: mouton4711/kubernetes:envoy-sidecar
           ports:
             - containerPort: 8888
               name: sidecar-port
         - name: frontend-nodejs-container
           image: mouton4711/kubernetes:frontend-nodejs
-          envFrom:
-            - configMapRef:
-                name: translation-config
-          env:
-            - name: BACKEND_HOST1
-              value: "backend-golang"
-            - name: BACKEND_HOST2
-              value: "backend-spring"
+
 ---
 kind: Service
 apiVersion: v1

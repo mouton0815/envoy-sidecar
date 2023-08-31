@@ -13,16 +13,14 @@ spec:
         app: backend-golang-pod
     spec:
       containers:
-        - name: sidecar-envoy-container
-          image: mouton4711/kubernetes:sidecar-envoy
+        - name: sidecar-golang-container
+          image: mouton4711/kubernetes:envoy-sidecar
           ports:
             - containerPort: 8888
               name: sidecar-port
         - name: backend-golang-container
           image: mouton4711/kubernetes:backend-golang
-          envFrom:
-            - configMapRef:
-                name: translation-config
+
 ---
 kind: Service
 apiVersion: v1

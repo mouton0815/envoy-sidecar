@@ -14,15 +14,13 @@ spec:
     spec:
       containers:
         - name: sidecar-spring-container
-          image: mouton4711/kubernetes:sidecar-envoy
+          image: mouton4711/kubernetes:envoy-sidecar
           ports:
             - containerPort: 8888
               name: sidecar-port
         - name: backend-spring-container
           image: mouton4711/kubernetes:backend-spring
-          envFrom:
-            - configMapRef:
-                name: translation-config
+
 ---
 kind: Service
 apiVersion: v1
