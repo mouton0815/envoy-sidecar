@@ -16,7 +16,7 @@ spec:
         - name: sidecar-nodejs-container
           image: mouton4711/kubernetes:frontend-envoy
           ports:
-            - containerPort: 8888
+            - containerPort: 8443
               name: sidecar-port
         - name: frontend-nodejs-container
           image: mouton4711/kubernetes:frontend-nodejs
@@ -31,7 +31,7 @@ spec:
   selector:
     app: frontend-nodejs-pod
   ports:
-    - port: 80
+    - port: 443
       targetPort: sidecar-port
 
 
