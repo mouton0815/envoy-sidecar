@@ -6,6 +6,7 @@ This is a clone of https://github.com/mouton0815/hello-kubernetes with the diffe
 Sidecar and application reside in the same Kubernetes Pod.
 The sidecar proxies incoming HTTP traffic and acts as router for outgoing traffic.
 
+![Envoy Sidecar](envoy-sidecar.jpg "Envoy sidecar")
 
 ## Preconditions
 You need running Docker and Kubernetes installations, either on your workstation or at a public cloud provider.
