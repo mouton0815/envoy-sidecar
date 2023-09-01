@@ -1,12 +1,9 @@
 # Envoy Sidecar
 
 This is a clone of https://github.com/mouton0815/hello-kubernetes with the difference that every application has an
-[Envoy](https://www.envoyproxy.io) sidecar.
+[Envoy](https://www.envoyproxy.io) sidecar. Sidecar and application reside in the same Kubernetes Pod.
+The sidecar proxies incoming (TODO: and outgoing) HTTP traffic.
 
-Sidecar and application reside in the same Kubernetes Pod.
-The sidecar proxies incoming HTTP traffic and acts as router for outgoing traffic.
-
-![Envoy Sidecar](envoy-sidecar.jpg "Envoy sidecar")
 
 ## Preconditions
 You need running Docker and Kubernetes installations, either on your workstation or at a public cloud provider.
@@ -17,7 +14,10 @@ An alternative is [minikube](https://kubernetes.io/docs/setup/learning-environme
 ## Build Docker Images
 
 ```shell script
-$ sh build-images.sh
+$ docker image build --tag mouton4711/kubernetes:envoy-sidecar ./envoy
+$ docker image build --tag mouton4711/kubernetes:backend-spring ./backend-spring
+$ docker image build --tag mouton4711/kubernetes:backend-golang ./backend-golang
+$ docker image build --tag mouton4711/kubernetes:frontend-nodejs ./frontend-nodejs
 ```
 
 ## Deploy to Kubernetes
