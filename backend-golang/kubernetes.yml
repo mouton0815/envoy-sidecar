@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: sidecar-golang-container
-          image: mouton4711/kubernetes:envoy-sidecar
+          image: mouton4711/kubernetes:backend-envoy
           ports:
             - containerPort: 8888
               name: sidecar-port

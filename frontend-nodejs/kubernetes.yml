@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: sidecar-nodejs-container
-          image: mouton4711/kubernetes:envoy-sidecar
+          image: mouton4711/kubernetes:frontend-envoy
           ports:
             - containerPort: 8888
               name: sidecar-port
