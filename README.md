@@ -14,9 +14,10 @@ An alternative is [minikube](https://kubernetes.io/docs/setup/learning-environme
 ## Build Docker Images
 
 ```shell script
-$ docker image build --tag mouton4711/kubernetes:envoy-sidecar ./envoy
+$ docker image build --tag mouton4711/kubernetes:backend-envoy ./backend-envoy
 $ docker image build --tag mouton4711/kubernetes:backend-spring ./backend-spring
 $ docker image build --tag mouton4711/kubernetes:backend-golang ./backend-golang
+$ docker image build --tag mouton4711/kubernetes:frontend-envoy ./frontend-envoy
 $ docker image build --tag mouton4711/kubernetes:frontend-nodejs ./frontend-nodejs
 ```
 
