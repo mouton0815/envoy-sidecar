@@ -4,7 +4,12 @@ This is a clone of https://github.com/mouton0815/hello-kubernetes with the diffe
 [Envoy](https://www.envoyproxy.io) sidecar.
 
 Sidecar and application reside in the same Kubernetes Pod.
-The sidecar proxies incoming HTTP traffic and acts as router for outgoing traffic.
+The sidecar proxies incoming traffic and acts as router for outgoing traffic.
+
+All sidecar proxies terminate incoming TLS connections and use HTTP for communication with their main application.
+The frontend sidecar proxy additionally originates TLS encryption for the communication with the two backend services.
+That way, all traffic outside K8s, and all traffic between Pods is encrypted. Only the traffic within a Pod uses plain HTTP. 
+
 
 ![Envoy Sidecar](envoy-sidecar.jpg "Envoy sidecar")
 
