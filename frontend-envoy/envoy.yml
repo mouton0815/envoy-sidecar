@@ -100,7 +100,18 @@ static_resources:
                   address:
                     socket_address:
                       address: backend-spring
-                      port_value: 80
+                      port_value: 443
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+              - certificate_chain:
+                  filename: "/etc/envoy/example-com.crt"
+                private_key:
+                  filename: "/etc/envoy/example-com.key"
+
     - name: golang_cluster
       type: STRICT_DNS
       load_assignment:
@@ -111,4 +122,14 @@ static_resources:
                   address:
                     socket_address:
                       address: backend-golang
-                      port_value: 80
+                      port_value: 443
+      transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+          common_tls_context:
+            tls_certificates:
+              - certificate_chain:
+                  filename: "/etc/envoy/example-com.crt"
+                private_key:
+                  filename: "/etc/envoy/example-com.key"
