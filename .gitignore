@@ -7,4 +7,4 @@ yarn.lock
 /kubernetes.yml
 out/
 build/
-frontend-envoy/example-com.*
+example-com.*

@@ -19,9 +19,11 @@ You need running Docker and Kubernetes installations, either on your workstation
 For example, both Docker and Kubernetes come with [Docker Desktop](https://www.docker.com/products/docker-desktop) available for Mac and Windows.
 An alternative is [minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/), which also runs on Linux.
 
+To create a self-signed TLS certificate, you also need [OpenSSL](https://www.openssl.org) installed.
+
 ## Create Certificate
 ```shell
-$ openssl req -x509 -newkey rsa:4096 -keyout frontend-envoy/example-com.key -out frontend-envoy/example-com.crt -days 365 -nodes -subj "/C=US/ST=LA/L=LA/O=Example/OU=IT/CN=example.com"
+$ sh create-certificate.sh
 ```
 
 ## Build Docker Images
@@ -41,7 +43,7 @@ Service `frontend-nodejs` has type [LoadBalancer](https://kubernetes.io/docs/con
 If you run Docker Desktop, there is nothing additional to do, because Docker Deskop exposes services of type `LoadBalancer` to `localhost`.
 You should be able to access the application from a web browser  
 ```
-curl --cacert frontend-envoy/example-com.crt --connect-to example.com:443:localhost:443 -H 'Host: example.com' https://example.com/World 
+curl --cacert example-com.crt --connect-to example.com:443:localhost:443 -H 'Host: example.com' https://example.com/World 
 ```
 If your Kubernetes runs on a public cloud, you need to create an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) service
 that connects to the cloud provider's load balancer. Alternatively, you can setup an own load balancer like [ingress-nginx](https://github.com/kubernetes/ingress-nginx).
