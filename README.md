@@ -1,7 +1,7 @@
 # Envoy Sidecar
 
-This is a clone of https://github.com/mouton0815/hello-kubernetes with the difference that every application has an
-[Envoy](https://www.envoyproxy.io) sidecar.
+This project is based on https://github.com/mouton0815/hello-kubernetes.
+Every application of that project gets an [Envoy](https://www.envoyproxy.io) sidecar.
 
 Sidecar and application reside in the same Kubernetes Pod.
 The sidecar proxies incoming traffic and acts as router for outgoing traffic.
