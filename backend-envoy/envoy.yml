@@ -1,7 +1,7 @@
 static_resources:
 
   listeners:
-    # Proxies the incoming traffic to the frontend nodejs service
+    # Proxies the incoming traffic to the backend service
     - name: ingress_listener
       address:
         socket_address:
@@ -38,9 +38,9 @@ static_resources:
               common_tls_context:
                 tls_certificates:
                   - certificate_chain:
-                      filename: "/etc/envoy/example-com.crt"
+                      filename: "/etc/envoy/tls.crt"
                     private_key:
-                      filename: "/etc/envoy/example-com.key"
+                      filename: "/etc/envoy/tls.key"
 
   clusters:
   - name: service_cluster

@@ -43,7 +43,7 @@ Service `frontend-nodejs` has type [LoadBalancer](https://kubernetes.io/docs/con
 If you run Docker Desktop, there is nothing additional to do, because Docker Deskop exposes services of type `LoadBalancer` to `localhost`.
 You should be able to access the application from a web browser  
 ```
-curl --cacert example-com.crt --connect-to example.com:443:localhost:443 -H 'Host: example.com' https://example.com/World 
+curl --cacert tls.crt https://localhost/World 
 ```
 If your Kubernetes runs on a public cloud, you need to create an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) service
-that connects to the cloud provider's load balancer. Alternatively, you can setup an own load balancer like [ingress-nginx](https://github.com/kubernetes/ingress-nginx).
+that connects to the cloud provider's load balancer. Alternatively, you can set up an own load balancer like [ingress-nginx](https://github.com/kubernetes/ingress-nginx).

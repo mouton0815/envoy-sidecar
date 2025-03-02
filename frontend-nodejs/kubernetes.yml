@@ -14,12 +14,20 @@ spec:
     spec:
       containers:
         - name: sidecar-nodejs-container
-          image: mouton4711/kubernetes:frontend-envoy
+          image: mouton4711/hello_k8s_frontend-envoy
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8443
               name: sidecar-port
         - name: frontend-nodejs-container
-          image: mouton4711/kubernetes:frontend-nodejs
+          image: mouton4711/hello_k8s_frontend-nodejs
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: translation-config
+          env:
+            - name: BACKEND_HOSTS
+              value: "localhost:7777/golang,localhost:7777/spring" # Routes of the egress Envoy proxy
 
 ---
 kind: Service

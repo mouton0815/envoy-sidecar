@@ -7,4 +7,4 @@ yarn.lock
 /kubernetes.yml
 out/
 build/
-example-com.*
+tls.*

@@ -7,3 +7,10 @@ resources:
   - backend-golang/kubernetes.yml
   - backend-spring/kubernetes.yml
   - frontend-nodejs/kubernetes.yml
+
+# Generate a translation config from literals
+configMapGenerator:
+  - name: translation-config
+    literals:
+      - greetingLabel=Hello
+

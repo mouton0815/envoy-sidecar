@@ -3,7 +3,7 @@ apiVersion: apps/v1
 metadata:
   name: backend-spring
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend-spring-pod
@@ -14,12 +14,17 @@ spec:
     spec:
       containers:
         - name: sidecar-spring-container
-          image: mouton4711/kubernetes:backend-envoy
+          image: mouton4711/hello_k8s_backend-envoy
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8443
               name: sidecar-port
         - name: backend-spring-container
-          image: mouton4711/kubernetes:backend-spring
+          image: mouton4711/hello_k8s_backend-spring
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: translation-config
 
 ---
 kind: Service

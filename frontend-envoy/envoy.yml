@@ -38,9 +38,9 @@ static_resources:
               common_tls_context:
                 tls_certificates:
                   - certificate_chain:
-                      filename: "/etc/envoy/example-com.crt"
+                      filename: "/etc/envoy/tls.crt"
                     private_key:
-                      filename: "/etc/envoy/example-com.key"
+                      filename: "/etc/envoy/tls.key"
 
     # Routes the outgoing traffic from the frontend nodejs service to the backend Pods
     - name: egress_listener
@@ -108,9 +108,9 @@ static_resources:
           common_tls_context:
             tls_certificates:
               - certificate_chain:
-                  filename: "/etc/envoy/example-com.crt"
+                  filename: "/etc/envoy/tls.crt"
                 private_key:
-                  filename: "/etc/envoy/example-com.key"
+                  filename: "/etc/envoy/tls.key"
 
     - name: golang_cluster
       type: STRICT_DNS
@@ -130,6 +130,6 @@ static_resources:
           common_tls_context:
             tls_certificates:
               - certificate_chain:
-                  filename: "/etc/envoy/example-com.crt"
+                  filename: "/etc/envoy/tls.crt"
                 private_key:
-                  filename: "/etc/envoy/example-com.key"
+                  filename: "/etc/envoy/tls.key"
