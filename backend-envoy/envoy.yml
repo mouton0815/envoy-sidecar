@@ -38,9 +38,9 @@ static_resources:
               common_tls_context:
                 tls_certificates:
                   - certificate_chain:
-                      filename: "/etc/envoy/tls.crt"
+                      filename: "/etc/tls/tls.crt"
                     private_key:
-                      filename: "/etc/envoy/tls.key"
+                      filename: "/etc/tls/tls.key"
 
   clusters:
   - name: service_cluster

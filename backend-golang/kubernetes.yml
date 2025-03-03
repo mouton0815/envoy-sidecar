@@ -12,10 +12,18 @@ spec:
       labels:
         app: backend-golang-pod
     spec:
+      volumes:
+        - name: tls-volume
+          secret:
+            secretName: tls-secret
       containers:
         - name: sidecar-golang-container
           image: mouton4711/hello_k8s_backend-envoy
           imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: tls-volume
+              mountPath: "/etc/tls"
+              readOnly: true
           ports:
             - containerPort: 8443
               name: sidecar-port

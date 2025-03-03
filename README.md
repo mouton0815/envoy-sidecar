@@ -21,15 +21,21 @@ An alternative is [minikube](https://kubernetes.io/docs/setup/learning-environme
 
 To create a self-signed TLS certificate, you also need [OpenSSL](https://www.openssl.org) installed.
 
-## Create Certificate
+## Create TLS Certificate
 ```shell
-$ sh create-certificate.sh
+$ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout tls.key -out tls.crt -subj "/CN=localhost"
+```
+
+## Apply TLS Certificate
+```shell
+$ kubectl create secret tls tls-secret --cert=tls.crt --key=tls.key
 ```
 
 ## Build Docker Images
 
 ```shell
-$ sh build-images.sh
+$ docker image build -t mouton4711/hello_k8s_backend-envoy ./backend-envoy
+$ docker image build -t mouton4711/hello_k8s_frontend-envoy ./frontend-envoy
 ```
 
 ## Deploy to Kubernetes

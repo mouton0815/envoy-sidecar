@@ -1,7 +1,7 @@
 static_resources:
 
   listeners:
-    # Proxies the incoming traffic to the frontend nodejs service
+    # Proxies the incoming traffic to the frontend Node.js service
     - name: ingress_listener
       address:
         socket_address:
@@ -38,11 +38,11 @@ static_resources:
               common_tls_context:
                 tls_certificates:
                   - certificate_chain:
-                      filename: "/etc/envoy/tls.crt"
+                      filename: "/etc/tls/tls.crt"
                     private_key:
-                      filename: "/etc/envoy/tls.key"
+                      filename: "/etc/tls/tls.key"
 
-    # Routes the outgoing traffic from the frontend nodejs service to the backend Pods
+    # Routes the outgoing traffic from the frontend Node.js service to the backend Pods
     - name: egress_listener
       address:
         socket_address:
@@ -108,9 +108,9 @@ static_resources:
           common_tls_context:
             tls_certificates:
               - certificate_chain:
-                  filename: "/etc/envoy/tls.crt"
+                  filename: "/etc/tls/tls.crt"
                 private_key:
-                  filename: "/etc/envoy/tls.key"
+                  filename: "/etc/tls/tls.key"
 
     - name: golang_cluster
       type: STRICT_DNS
@@ -130,6 +130,6 @@ static_resources:
           common_tls_context:
             tls_certificates:
               - certificate_chain:
-                  filename: "/etc/envoy/tls.crt"
+                  filename: "/etc/tls/tls.crt"
                 private_key:
-                  filename: "/etc/envoy/tls.key"
+                  filename: "/etc/tls/tls.key"
