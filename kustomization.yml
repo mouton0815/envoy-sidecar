@@ -13,4 +13,9 @@ configMapGenerator:
   - name: translation-config
     literals:
       - greetingLabel=Hello
-
+  - name: envoy-config-backend
+    files:
+      - backend-envoy/envoy.yml
+  - name: envoy-config-frontend
+    files:
+      - frontend-envoy/envoy.yml

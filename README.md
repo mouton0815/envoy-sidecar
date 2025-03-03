@@ -31,13 +31,6 @@ $ openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout tls.key -out tls.c
 $ kubectl create secret tls tls-secret --cert=tls.crt --key=tls.key
 ```
 
-## Build Docker Images
-
-```shell
-$ docker image build -t mouton4711/hello_k8s_backend-envoy ./backend-envoy
-$ docker image build -t mouton4711/hello_k8s_frontend-envoy ./frontend-envoy
-```
-
 ## Deploy to Kubernetes
 ```shell
 $ kubectl apply -k .

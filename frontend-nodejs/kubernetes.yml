@@ -16,17 +16,26 @@ spec:
         - name: tls-volume
           secret:
             secretName: tls-secret
+        - name: envoy-volume
+          configMap:
+            name: envoy-config-frontend
       containers:
-        - name: sidecar-nodejs-container
-          image: mouton4711/hello_k8s_frontend-envoy
+        - name: envoy-nodejs-container
+          image: envoyproxy/envoy:v1.24.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: tls-volume
               mountPath: "/etc/tls"
               readOnly: true
+            - name: envoy-volume
+              mountPath: "/etc/envoy"
+              readOnly: true
           ports:
             - containerPort: 8443
-              name: sidecar-port
+              name: envoy-port
+          args:
+            - "-c"
+            - "/etc/envoy/envoy.yml"
         - name: frontend-nodejs-container
           image: mouton4711/hello_k8s_frontend-nodejs
           imagePullPolicy: IfNotPresent
@@ -48,6 +57,6 @@ spec:
     app: frontend-nodejs-pod
   ports:
     - port: 443
-      targetPort: sidecar-port
+      targetPort: envoy-port
 
 
