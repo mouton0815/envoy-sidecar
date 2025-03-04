@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      volumes:
+        - name: keycloak-volume
+          configMap:
+            name: keycloak-realm
+      containers:
+        - name: keycloak
+          image: quay.io/keycloak/keycloak
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+           - name: keycloak-volume
+             mountPath: "/opt/keycloak/data/import"
+             readOnly: true
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "admin"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "admin"
+          args:
+            - "start-dev"
+            - "--import-realm"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: keycloak

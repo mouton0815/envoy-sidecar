@@ -4,6 +4,7 @@ kind: Kustomization
 # All resources needed for the application package
 resources:
   - redis/kubernetes.yml
+  - keycloak/kubernetes.yml
   - backend-golang/kubernetes.yml
   - backend-spring/kubernetes.yml
   - frontend-nodejs/kubernetes.yml
@@ -19,3 +20,6 @@ configMapGenerator:
   - name: envoy-config-frontend
     files:
       - frontend-envoy/envoy.yml
+  - name: keycloak-realm
+    files:
+      - keycloak/simple-realm.json

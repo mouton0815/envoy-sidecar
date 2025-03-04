@@ -18,6 +18,24 @@ static_resources:
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
                 http_filters:
+                  - name: envoy.filters.http.jwt_authn
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.jwt_authn.v3.JwtAuthentication
+                      providers:
+                        keycloak_provider:
+                          issuer: "http://localhost:8080/realms/simple"
+                          remote_jwks:
+                            http_uri:
+                              uri: "http://keycloak:8080/realms/simple/protocol/openid-connect/certs"
+                              cluster: keycloak_cluster
+                              timeout: 5s
+                            cache_duration: 300s
+                          forward: false # Do not forward JWT to upstream service
+                      rules:
+                        - match:
+                            prefix: "/"
+                          requires:
+                            provider_name: keycloak_provider
                   - name: envoy.filters.http.router
                     typed_config:
                       "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
@@ -133,3 +151,15 @@ static_resources:
                   filename: "/etc/tls/tls.crt"
                 private_key:
                   filename: "/etc/tls/tls.key"
+
+    - name: keycloak_cluster
+      type: STRICT_DNS
+      load_assignment:
+        cluster_name: keycloak_cluster
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: keycloak
+                      port_value: 8080
